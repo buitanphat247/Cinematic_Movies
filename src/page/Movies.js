@@ -149,7 +149,6 @@ const Movies = () => {
         }
         try {
           const response = await axios.request(options);
-          console.log(response.data);
           setMovies(response.data);
           setTotalPage(response.data.total_pages);
           setIsLoading(false);
@@ -211,6 +210,7 @@ const Movies = () => {
                   title={item.title}
                   release_date={item.release_date}
                   id={item.id}
+                  rating={item.vote_average}
                 ></Cardmovie>
               ))}
         </div>

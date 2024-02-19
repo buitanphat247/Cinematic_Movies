@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setMovies } from "./reducer/slice/global_slice";
-import "./App.css";
+import "./App.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./page/Home";
 import Dashboard from "./layout/Dashboard";
@@ -14,10 +14,6 @@ import MobileWarningPage from "./page/MobileWarningPage";
 
 const App = () => {
   const dispatch = useDispatch();
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,38 +45,23 @@ const App = () => {
     };
     fetchData();
   }, [dispatch]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const newWidth = window.innerWidth;
-      if (newWidth < 1024) {
-        window.location.href = "/mobile-warning";
-      } else {
-        window.location.href = "/";
-      }
-      setWindowSize({
-        width: newWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />}>
-          <Route path="/" element={<Dashboard />}></Route>
-          <Route path="/movies" element={<Movies />}></Route>
-          <Route path="/movies/views/:slug" element={<Movies />}></Route>
-          <Route path="/movies/detail/:slug" element={<Detail />}></Route>
-        </Route>
-        <Route path="mobile-warning" element={<MobileWarningPage />} />{" "}
-        <Route path="*" element={<Error />}></Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  if (window.innerWidth < 1024) {
+    return <MobileWarningPage></MobileWarningPage>;
+  } else {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}>
+            <Route path="/" element={<Dashboard />}></Route>
+            <Route path="/movies" element={<Movies />}></Route>
+            <Route path="/movies/views/:slug" element={<Movies />}></Route>
+            <Route path="/movies/detail/:slug" element={<Detail />}></Route>
+          </Route>
+          <Route path="*" element={<Error />}></Route>
+        </Routes>
+      </BrowserRouter>
+    );
+  }
 };
 
 export default App;

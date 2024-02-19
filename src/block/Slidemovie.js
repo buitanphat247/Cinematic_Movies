@@ -11,8 +11,8 @@ const Slidemovie = (props) => {
   const movies_data = props.movies_data;
   return (
     <div className="px-5 ">
-      <div className="flex items-center justify-between text-white capitalize font-bold text-xl">
-        <h1>{props.title}</h1>
+      <div className="flex items-center justify-between text-white capitalize font-bold text-lg">
+        <h1 className="capitalize">{props.title}</h1>
         <NavLink
           to={`/movies/views/${props.url}`}
           className="cursor-pointer hover:underline hover:text-blue-400"
@@ -52,6 +52,7 @@ const Slidemovie = (props) => {
                   title={item.title}
                   release_date={item.release_date}
                   id={item.id}
+                  rating={item.vote_average}
                 />
               </SwiperSlide>
             ))}

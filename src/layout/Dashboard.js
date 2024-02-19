@@ -5,6 +5,7 @@ import Slidemovie from "../block/Slidemovie";
 
 const Dashboard = (props) => {
   const data_movies = useSelector((state) => state.global.movies);
+  console.log("🚀 ~ Dashboard ~ data_movies:", data_movies)
   return (
     <div>
       <Banner data={data_movies.upcoming}></Banner>
